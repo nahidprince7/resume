@@ -1,0 +1,13 @@
+# Full-resolution screenshots (assets/img/projects/original/) are tracked on
+# purpose: ~7 MB is nothing for a repo, and it gives them an offsite backup.
+
+# Scratch renders used while checking the layout
+_test.html
+_t*.html
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/

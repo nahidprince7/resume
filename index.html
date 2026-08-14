@@ -746,7 +746,17 @@
     .wbody canvas,.fishy canvas{max-width:100%;height:auto;}
     .hub{grid-template-columns:repeat(2,1fr);}
     .taskbtn{max-width:42vw;}
-    #startmenu{width:210px;max-height:calc(100vh - 46px);overflow:auto;}
+    /* The menu grew when the desktop chrome was scaled up; phones need it back
+       down. And 100vh on mobile is the URL-bar-hidden height, so right after a
+       refresh the menu is taller than what is actually on screen — dvh tracks
+       the real viewport, with vh left as the fallback for older browsers. */
+    #startmenu{width:206px;overflow:auto;bottom:46px;
+      max-height:calc(100vh - 56px);max-height:calc(100dvh - 56px);}
+    #startmenu li{padding:7px 10px;font-size:13.5px;gap:9px;}
+    #startmenu li .g{font-size:17px;}
+    #startmenu .side{width:26px;font-size:11px;}
+    #startmenu ul{margin-left:26px;padding:3px;}
+    #startmenu .sep{margin:2px 6px;}
     #clock{padding:0 8px;}
     #start{padding:2px 8px;}
     #updbtn{padding:0 9px;font-size:11px;font-weight:700;}

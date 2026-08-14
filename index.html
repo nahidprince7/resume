@@ -282,14 +282,14 @@
   /* ---------- taskbar ---------- */
   #taskbar{position:fixed;left:0;right:0;bottom:0;height:40px;z-index:4000;background:var(--face);
     display:flex;align-items:center;gap:5px;padding:3px 4px;}
-  #start{display:flex;align-items:center;gap:7px;padding:2px 12px 2px 8px;font-weight:700;height:31px;cursor:pointer;background:var(--face);}
+  #start{flex:0 0 auto;display:flex;align-items:center;gap:7px;padding:2px 12px 2px 8px;font-weight:700;height:31px;cursor:pointer;background:var(--face);}
   #start.on{border-color:var(--sh) var(--hi) var(--hi) var(--sh);box-shadow:inset 1px 1px var(--dksh),inset -1px -1px var(--lt);}
   #start .flag{font-family:"Pixelify Sans";font-size:15px;color:#000082;}
-  .tasks{flex:1;display:flex;gap:5px;overflow:hidden;}
+  .tasks{flex:1 1 0;min-width:0;display:flex;gap:5px;overflow:hidden;}
   .taskbtn{max-width:220px;height:31px;display:flex;align-items:center;gap:7px;padding:0 12px;font-size:13.5px;cursor:pointer;background:var(--face);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .taskbtn.active{border-color:var(--sh) var(--hi) var(--hi) var(--sh);box-shadow:inset 1px 1px var(--dksh),inset -1px -1px var(--lt);font-weight:700;}
-  #clock{height:26px;display:flex;align-items:center;padding:0 12px;font-size:12px;}
+  #clock{flex:0 0 auto;height:26px;display:flex;align-items:center;padding:0 12px;font-size:12px;}
 
   /* start menu */
   #startmenu{position:fixed;left:4px;bottom:43px;width:265px;z-index:4100;background:var(--face);display:none;}
@@ -502,7 +502,7 @@
   .ms .cell.n7{color:#000;}.ms .cell.n8{color:#808080;}
 
   /* update button in taskbar */
-  #updbtn{height:26px;display:flex;align-items:center;gap:7px;padding:0 12px;font-size:12px;font-weight:700;cursor:pointer;background:var(--face);}
+  #updbtn{flex:0 0 auto;height:26px;display:flex;align-items:center;gap:7px;padding:0 12px;font-size:12px;font-weight:700;cursor:pointer;background:var(--face);}
   #updbtn .dot{width:8px;height:8px;border-radius:50%;background:#12b912;box-shadow:0 0 0 0 rgba(18,185,18,.7);animation:pulse 1.8s infinite;}
   #updbtn .ub-short{display:none;}
   @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,185,18,.6);}70%{box-shadow:0 0 0 7px rgba(18,185,18,0);}100%{box-shadow:0 0 0 0 rgba(18,185,18,0);}}
@@ -757,6 +757,16 @@
     #startmenu .side{width:26px;font-size:11px;}
     #startmenu ul{margin-left:26px;padding:3px;}
     #startmenu .sep{margin:2px 6px;}
+    /* iOS Safari lays position:fixed out against the LARGE viewport, so a bar
+       pinned to bottom:0 ends up behind Safari's own toolbar and disappears.
+       Anchoring to a 100dvh body instead keeps it inside what is really on
+       screen. dvh follows the toolbar as it shows and hides; vh is the fallback
+       for iOS below 15.4. */
+    html,body{height:100vh;height:100dvh;position:relative;overflow:hidden;}
+    #desk{position:absolute;inset:0 0 calc(40px + env(safe-area-inset-bottom)) 0;}
+    #taskbar{position:absolute;left:0;right:0;bottom:0;height:auto;min-height:40px;
+      padding-bottom:calc(3px + env(safe-area-inset-bottom));}
+    #startmenu{position:absolute;bottom:calc(46px + env(safe-area-inset-bottom));}
     #clock{padding:0 8px;}
     #start{padding:2px 8px;}
     #updbtn{padding:0 9px;font-size:11px;font-weight:700;}
@@ -1042,6 +1052,7 @@
   <div class="h" style="cursor: move;"><span>✦ Did you know?</span><span class="x" id="ffx">✕</span></div>
   <div class="txt" id="fftxt" style="opacity: 1;">The first webcam watched a coffee pot at Cambridge so no one made a wasted trip.</div>
 </div>
+</div><!-- /#desk -->
 
 <!-- TASKBAR -->
 <div id="taskbar" class="out">

@@ -830,6 +830,23 @@
   ]
 }
 </script>
+
+<!-- Google Analytics 4. The Measurement ID below is the only thing to edit;
+     find it under Admin > Data streams > Web (it looks like G-XXXXXXXXXX). -->
+<script>
+window.GA_ID='G-JP28DY57DP';
+(function(){var s=document.createElement('script');s.async=1;s.src='https://www.googletagmanager.com/gtag/js?id='+window.GA_ID;document.head.appendChild(s);})();
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config',window.GA_ID);
+// The résumé PDF is the one conversion this site has, so count it separately
+// from a plain page view. Delegated, because several links point at the file.
+document.addEventListener('click',function(e){
+  var a=e.target.closest&&e.target.closest('a[href$=".pdf"]');
+  if(a)gtag('event','resume_download',{link_url:a.getAttribute('href')});
+},true);
+</script>
 </head>
 <body>
 <main id="seo-content" aria-hidden="false">
@@ -2296,7 +2313,7 @@ function doOpen(what){
   else if(what==='experience')openExperience();
   else if(what==='education')openEducation();
   else if(what==='video')openVideo();
-  else if(what==='resume')window.open('resume/Nahid_Hasan_CV.pdf','_blank');
+  else if(what==='resume'){gtag('event','resume_download',{link_url:'resume/Nahid_Hasan_CV.pdf'});window.open('resume/Nahid_Hasan_CV.pdf','_blank');}
   else if(what==='help'){if(matchMedia('(max-width:760px)').matches){if(window.__showClipIntro)window.__showClipIntro();}else if(window.__showClip)window.__showClip();}
   else if(what==='mines')openMines();
   else if(what==='pinball')openPinball();
